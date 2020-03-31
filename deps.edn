@@ -3,6 +3,6 @@
          org.clojure/clojurescript {:mvn/version "1.10.597"}
          datascript                {:mvn/version "0.18.10"}
          re-frame                  {:git/url "https://github.com/nextjournal/freerange"
-                                    :sha     "bbb036d0fed14c5e4d6fa17485972d3a3216ff2d"}
+                                    :sha     "3a18584755e784b95b2be5878e26f61270eeb2e6"}
          denistakeda/posh          {:mvn/version "0.5.8"}
          lambdaisland/glogi        {:mvn/version "0.0-36"}}}
