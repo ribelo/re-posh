@@ -1,7 +1,8 @@
-{:paths   ["src"]
- :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
-           org.clojure/clojurescript {:mvn/version "1.10.597"}
-           datascript                {:mvn/version "0.18.10"}
-           re-frame                  {:git/url "https://github.com/nextjournal/freerange"
-                                      :sha     "7fa20bb9876832e6ac2d32f11532a9dce9c63215"}
-           denistakeda/posh          {:mvn/version "0.5.8"}}}
+{:paths ["src"]
+ :deps  {org.clojure/clojure       {:mvn/version "1.10.1"}
+         org.clojure/clojurescript {:mvn/version "1.10.597"}
+         datascript                {:mvn/version "0.18.10"}
+         re-frame                  {:git/url "https://github.com/nextjournal/freerange"
+                                    :sha     "bbb036d0fed14c5e4d6fa17485972d3a3216ff2d"}
+         denistakeda/posh          {:mvn/version "0.5.8"}
+         lambdaisland/glogi        {:mvn/version "0.0-36"}}}

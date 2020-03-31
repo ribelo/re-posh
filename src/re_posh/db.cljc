@@ -2,15 +2,24 @@
   (:require [posh.reagent :as p]
             [re-frame.core :as re-frame]
             [re-frame.context :as context]
-            [re-frame.frame :as frame]))
+            [re-frame.frame :as frame]
+            [lambdaisland.glogi :as log]
+            [datascript.core :as ds]))
 
-;; Basic store. This atom stores another atom
-;; @store - datascript connection
-;; @@store - datascript database
-;; (def store (atom nil))
+;; (store) - datascript connection
+;; @(store) - datascript database
 
 (defn conn []
-  (::conn (context/current-frame)))
+  (let [conn (::conn (context/current-frame))]
+    (cond
+      (nil? conn)
+      (log/error :nil-conn {:msg "Context frame is missing re-posh connection."
+                            :frame-keys (keys (context/current-frame))})
+      (not (ds/conn? @conn))
+      (log/error :invalid-conn {:msg "re-posh connection is not a valid Datascript connection"
+                                :conn conn}))
+    conn))
+
 
 (defn connect!
   "Connect DataScript store to the re-frame event system. Takes a freerange frame
