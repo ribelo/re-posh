@@ -15,11 +15,11 @@
       (nil? conn)
       (log/error :nil-conn {:msg "Context frame is missing re-posh connection."
                             :frame-keys (keys (context/current-frame))})
-      (not (ds/conn? @conn))
+      (not (ds/conn? conn))
       (log/error :invalid-conn {:msg "re-posh connection is not a valid Datascript connection"
-                                :conn conn}))
+                                :conn conn
+                                :frame-keys (keys (context/current-frame))}))
     conn))
-
 
 (defn connect!
   "Connect DataScript store to the re-frame event system. Takes a freerange frame
