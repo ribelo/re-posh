@@ -1,8 +1,6 @@
 (ns re-posh.core
   (:require [re-posh.subs :as subs]
             [re-posh.events :as events]
-            [re-posh.effects]
-            [re-posh.coeffects]
             [re-posh.db :as db]
             [re-frame.context :as re-frame]))
 

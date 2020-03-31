@@ -1,6 +1,6 @@
 (ns re-posh.subs
   (:require
-   [re-frame.core :as r]
+   [re-frame.context :as r]
    [re-frame.loggers :refer [console]]
    [re-posh.db :as db]
    [reagent.ratom :refer-macros [reaction]]
