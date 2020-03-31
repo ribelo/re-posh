@@ -1,0 +1,7 @@
+{:paths   ["src"]
+ :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
+           org.clojure/clojurescript {:mvn/version "1.10.597"}
+           datascript                {:mvn/version "0.18.10"}
+           re-frame                  {:git/url "https://github.com/nextjournal/freerange"
+                                      :sha     "e1fdfb90f40b3057221ba3f696af775754d42830"}
+           denistakeda/posh          {:mvn/version "0.5.8"}}}

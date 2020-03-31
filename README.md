@@ -1,6 +1,10 @@
 [![Clojars Project](https://img.shields.io/clojars/v/re-posh.svg)](https://clojars.org/re-posh)
 [![Gitter](https://img.shields.io/gitter/room/thunder-project/thunder.svg?style=flat-square)](https://gitter.im/re-posh/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
+# free-posh
+
+re-posh fork based on [freerange](https://github.com/nextjournal/freerange), a re-frame fork without global state.
+
 # re-posh
 
 `re-posh` is a ClojureScript library that empowers you to improve your [re-frame](https://github.com/Day8/re-frame) single-page applications to have a robust and flexible in-page database to manage your application's state.

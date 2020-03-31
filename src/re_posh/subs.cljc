@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :as r]
    [re-frame.loggers :refer [console]]
-   [re-posh.db :refer [store]]
+   [re-posh.db :as db]
    [reagent.ratom :refer-macros [reaction]]
    [posh.reagent  :as p]))
 
@@ -10,16 +10,16 @@
 
 (defmethod execute-sub :query
   [{:keys [query variables]}]
-  (let [pre-q (partial p/q query @store)]
+  (let [pre-q (partial p/q query (db/conn))]
     (apply pre-q (into [] variables))))
 
 (defmethod execute-sub :pull
   [{:keys [pattern id]}]
-  (p/pull @store pattern id))
+  (p/pull (db/conn) pattern id))
 
 (defmethod execute-sub :pull-many
   [{:keys [pattern ids]}]
-  (p/pull-many @store pattern ids))
+  (p/pull-many (db/conn) pattern ids))
 
 (defn reg-sub
   "For a given `query-id` register a `config` function and input `signals`
@@ -133,9 +133,9 @@
      query-id
      (fn [_ params]
        (if (= (count input-args) 0)
-         ;; if there is no inputs-fn provided (or sugar version) don't wrap anything in reaction,
+         ;; if there is no inputs-fn provided (or sugar version) don't wrap anything in reaction
          ;; just return posh's query or pull
-         (execute-sub (config-fn @@store params))
+         (execute-sub (config-fn @(db/conn) params))
          (reaction
           (let [inputs (inputs-fn params)
                 signals (if (list? inputs)

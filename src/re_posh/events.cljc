@@ -1,5 +1,5 @@
 (ns re-posh.events
-  (:require [re-frame.core :as r]))
+  (:require [re-frame.context :as r]))
 
 (defn reg-event-ds
   ([event-name interceptors handler]

@@ -1,11 +1,10 @@
 (ns re-posh.core
-  (:require
-    [re-posh.subs :as subs]
-    [re-posh.events :as events]
-    [re-posh.effects]
-    [re-posh.coeffects]
-    [re-posh.db :as db]
-    [re-frame.core :as re-frame]))
+  (:require [re-posh.subs :as subs]
+            [re-posh.events :as events]
+            [re-posh.effects]
+            [re-posh.coeffects]
+            [re-posh.db :as db]
+            [re-frame.context :as re-frame]))
 
 (def reg-query-sub subs/reg-query-sub)
 (def reg-pull-sub subs/reg-pull-sub)

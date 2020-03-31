@@ -35,3 +35,4 @@ resources
 /examples/todomvc/.cljs_rhino_repl/
 /examples/todomvc/figwheel_server.log
 /examples/todomvc/.lein-failures
+.cpcache
