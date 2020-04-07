@@ -1,25 +1,33 @@
 (ns re-posh.subs
   (:require
    [re-frame.context :as r]
+   [re-frame.frame :as f]
    [re-frame.loggers :refer [console]]
    [re-posh.db :as db]
    [reagent.ratom :refer-macros [reaction]]
-   [posh.reagent  :as p]))
+   [posh.reagent  :as p]
+   [lambdaisland.glogi :as log]))
 
-(defmulti execute-sub :type)
+(defn conn [frame]
+  (log/finest ::conn {:frame-id (:frame-id frame)})
+  (let [conn (::db/conn frame)]
+    (assert conn (str "re-posh conn missing from frame " (:frame-id frame)))
+    conn))
+
+(defmulti execute-sub (fn [_ sub] (:type sub)))
 
 (defmethod execute-sub :query
-  [{:keys [query variables]}]
-  (let [pre-q (partial p/q query (db/conn))]
+  [frame {:keys [query variables]}]
+  (let [pre-q (partial p/q query (conn frame))]
     (apply pre-q (into [] variables))))
 
 (defmethod execute-sub :pull
-  [{:keys [pattern id]}]
-  (p/pull (db/conn) pattern id))
+  [frame {:keys [pattern id]}]
+  (p/pull (conn frame) pattern id))
 
 (defmethod execute-sub :pull-many
-  [{:keys [pattern ids]}]
-  (p/pull-many (db/conn) pattern ids))
+  [frame {:keys [pattern ids]}]
+  (p/pull-many (conn frame) pattern ids))
 
 (defn reg-sub
   "For a given `query-id` register a `config` function and input `signals`
@@ -129,19 +137,20 @@
                        (fn inp-fn
                          ([_] (map r/subscribe vecs))
                          ([_ _] (map r/subscribe vecs)))))]
-    (r/reg-sub-raw
+    (f/reg-sub-raw
+     (r/current-frame)
      query-id
-     (fn [_ params]
+     (fn [frame params]
        (if (= (count input-args) 0)
          ;; if there is no inputs-fn provided (or sugar version) don't wrap anything in reaction
          ;; just return posh's query or pull
-         (execute-sub (config-fn @(db/conn) params))
+         (execute-sub frame (config-fn (conn frame) params))
          (reaction
           (let [inputs (inputs-fn params)
                 signals (if (list? inputs)
                           (map deref inputs)
                           (deref inputs))]
-            @(execute-sub (config-fn signals params)))))))))
+            @(execute-sub frame (config-fn signals params)))))))))
 
 (defn reg-query-sub
   "Syntax sugar for writing queries. It allows writing query subscription
