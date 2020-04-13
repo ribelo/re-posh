@@ -147,7 +147,7 @@
          (execute-sub frame (config-fn (conn frame) params))
          (reaction
           (let [inputs (inputs-fn params)
-                signals (if (list? inputs)
+                signals (if (seq? inputs)
                           (map deref inputs)
                           (deref inputs))]
             @(execute-sub frame (config-fn signals params)))))))))
